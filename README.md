@@ -11,16 +11,9 @@ $ pip install cookiecutter
 $ cookiecutter https://github.com/larsyencken/cookiecutter-go-service.git
 ```
 
-You will be asked about your basic info (name, project name, app name, etc.). This info will be used in your new project. Once you've answered these, you'll need to make an initial Git commit to make things work:
+You will be asked about your basic info (name, project name, app name, etc.). This info will be used to customize your new project.
 
-```console
-$ cd mygolangservice
-$ git init
-$ git add -A .
-$ git commit -m 'Initial scaffolding.'
-```
-
-Now you're ready! Run `make help` to see what commands are available for the project.
+Run `make help` to see the available management commands, or just run `make` to build your project.
 
 ## Features
 

@@ -40,7 +40,7 @@ help:
 	@echo '    make clean    Clean the directory tree.'
 	@echo
 
-build:
+build: .git
 	@echo "building ${OWNER} ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
 	godep get && \
@@ -48,6 +48,11 @@ build:
 
 clean:
 	@test ! -e bin/${BIN_NAME} || rm bin/${BIN_NAME}
+
+.git:
+	git init
+	git add -A .
+	git commit -m 'Initial scaffolding.'
 
 test:
 	go test ./...
