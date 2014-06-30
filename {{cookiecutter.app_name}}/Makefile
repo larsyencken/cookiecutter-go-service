@@ -26,8 +26,7 @@ GIT_COMMIT="$(shell git rev-parse HEAD)"
 # Check if there are uncommited changes
 GIT_DIRTY="$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)"
 
-# Add the godep path to the GOPATH
-GOPATH=$(shell godep path):$(shell echo $$GOPATH)
+GOPATH=$(PWD)/.vendor
 
 default: build
 
@@ -40,10 +39,10 @@ help:
 	@echo '    make clean    Clean the directory tree.'
 	@echo
 
-build: .git
+build: .git $(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}
 	@echo "building ${OWNER} ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
-	godep get && \
+	gogpm install && \
 	go build -ldflags "-X main.GitCommit ${GIT_COMMIT}${GIT_DIRTY}" -o bin/${BIN_NAME}
 
 clean:
@@ -53,6 +52,10 @@ clean:
 	git init
 	git add -A .
 	git commit -m 'Initial scaffolding.'
+
+$(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}:
+	mkdir -p $(GOPATH)/src/github.com/{{cookiecutter.github_username}}
+	(cd $(GOPATH)/src/github.com/{{cookiecutter.github_username}}; ln -s "$(PWD)")
 
 test:
 	go test ./...
