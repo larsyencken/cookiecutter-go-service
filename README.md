@@ -1,6 +1,6 @@
 # cookiecutter-go-service
 
-A Go service template for [cookiecutter](https://github.com/audreyr/cookiecutter), based on Mark Wolfe's [go-bootstrap](https://github.com/wolfeidau/go-bootstrap).
+A Go service template for [cookiecutter](https://github.com/audreyr/cookiecutter), based on Mark Wolfe's [go-bootstrap](https://github.com/wolfeidau/go-bootstrap). Use it to make a new project with the recommended layout and tooling all built-in from scratch.
 
 ## Use it now
 
