@@ -21,14 +21,16 @@ PROJECT_NAME={{cookiecutter.app_name}}
 REPO_HOST_URL=github.com
 
 # Grab the current commit
-GIT_COMMIT="$(shell git rev-parse HEAD)"
+GIT_COMMIT=$(shell git rev-parse HEAD)
 
 # Check if there are uncommited changes
-GIT_DIRTY="$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)"
+GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 
 # Use a local vendor directory for any dependencies; comment this out to
 # use the global GOPATH instead
 GOPATH=$(PWD)/.vendor
+
+INSTALL_PATH=$(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}
 
 default: build
 
@@ -37,11 +39,12 @@ help:
 	@echo
 	@echo 'Usage:'
 	@echo '    make build    Compile the project.'
+	@echo '    make link     Symlink this project into the GOPATH.'
 	@echo '    make test     Run tests on a compiled project.'
 	@echo '    make clean    Clean the directory tree.'
 	@echo
 
-build: .git $(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}} $(GOPATH)/bin/gogpm
+build: .git $(GOPATH)/bin/gogpm $(INSTALL_PATH)
 	@echo "building ${OWNER} ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
 	$(GOPATH)/bin/gogpm install && \
@@ -55,9 +58,15 @@ clean:
 	git add -A .
 	git commit -m 'Initial scaffolding.'
 
-$(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}:
-	mkdir -p $(GOPATH)/src/github.com/{{cookiecutter.github_username}}
-	(cd $(GOPATH)/src/github.com/{{cookiecutter.github_username}}; ln -s "$(PWD)")
+link:
+	# relink into the go path
+	if [ ! $(INSTALL_PATH) -ef . ]; then \
+		mkdir -p `dirname $(INSTALL_PATH)`; \
+		ln -s $(PWD) $(INSTALL_PATH); \
+	fi
+
+$(INSTALL_PATH):
+	make link
 
 $(GOPATH)/bin/gogpm:
 	go get github.com/mtibben/gogpm
@@ -65,4 +74,4 @@ $(GOPATH)/bin/gogpm:
 test:
 	go test ./...
 
-.PHONY: build dist clean test help default
+.PHONY: build dist clean test help default link
