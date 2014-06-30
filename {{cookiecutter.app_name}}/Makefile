@@ -26,6 +26,8 @@ GIT_COMMIT="$(shell git rev-parse HEAD)"
 # Check if there are uncommited changes
 GIT_DIRTY="$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)"
 
+# Use a local vendor directory for any dependencies; comment this out to
+# use the global GOPATH instead
 GOPATH=$(PWD)/.vendor
 
 default: build
@@ -39,10 +41,10 @@ help:
 	@echo '    make clean    Clean the directory tree.'
 	@echo
 
-build: .git $(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}
+build: .git $(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}} $(GOPATH)/bin/gogpm
 	@echo "building ${OWNER} ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
-	gogpm install && \
+	$(GOPATH)/bin/gogpm install && \
 	go build -ldflags "-X main.GitCommit ${GIT_COMMIT}${GIT_DIRTY}" -o bin/${BIN_NAME}
 
 clean:
@@ -56,6 +58,9 @@ clean:
 $(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}:
 	mkdir -p $(GOPATH)/src/github.com/{{cookiecutter.github_username}}
 	(cd $(GOPATH)/src/github.com/{{cookiecutter.github_username}}; ln -s "$(PWD)")
+
+$(GOPATH)/bin/gogpm:
+	go get github.com/mtibben/gogpm
 
 test:
 	go test ./...
