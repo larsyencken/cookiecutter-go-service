@@ -41,6 +41,7 @@ help:
 	@echo '    make build    Compile the project.'
 	@echo '    make link     Symlink this project into the GOPATH.'
 	@echo '    make test     Run tests on a compiled project.'
+	@echo '    make fmt      Reformat the source tree with gofmt.'
 	@echo '    make clean    Clean the directory tree.'
 	@echo
 
@@ -73,5 +74,8 @@ $(GOPATH)/bin/gogpm:
 
 test:
 	go test ./...
+
+fmt:
+	find . -name '*.go' -not -path './.vendor/*' -exec gofmt -w=true {} ';'
 
 .PHONY: build dist clean test help default link
