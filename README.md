@@ -4,21 +4,23 @@ A Go service template for [cookiecutter](https://github.com/audreyr/cookiecutter
 
 ## Use it now
 
-```bash
-pip install cookiecutter
-cookiecutter https://github.com/larsyencken/cookiecutter-go-service.git
+If you don't have `cookiecutter` installed, you'll need to install that first using Python's pip command:
+
+```console
+$ pip install cookiecutter
+$ cookiecutter https://github.com/larsyencken/cookiecutter-go-service.git
 ```
 
-You will be asked about your basic info (name, project name, app name, etc.). This info will be used in your new project. Once you've answered these, you'll need to make an initial Git commit to make things work.
+You will be asked about your basic info (name, project name, app name, etc.). This info will be used in your new project. Once you've answered these, you'll need to make an initial Git commit to make things work:
 
-```
-cd mygolangservice
-git init
-git add -A .
-git commit -m 'Initial scaffolding.'
+```console
+$ cd mygolangservice
+$ git init
+$ git add -A .
+$ git commit -m 'Initial scaffolding.'
 ```
 
-Now you're ready. Run `make help` to see what commands are available for the project.
+Now you're ready! Run `make help` to see what commands are available for the project.
 
 ## Features
 
