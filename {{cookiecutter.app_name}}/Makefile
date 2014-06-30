@@ -26,6 +26,8 @@ GIT_COMMIT="$(shell git rev-parse HEAD)"
 # Check if there are uncommited changes
 GIT_DIRTY="$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)"
 
+GOPATH=$(PWD)/.vendor
+
 default: build
 
 help:
@@ -37,7 +39,7 @@ help:
 	@echo '    make clean    Clean the directory tree.'
 	@echo
 
-build: .git
+build: .git $(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}
 	@echo "building ${OWNER} ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
 	gogpm install && \
@@ -50,6 +52,10 @@ clean:
 	git init
 	git add -A .
 	git commit -m 'Initial scaffolding.'
+
+$(GOPATH)/src/github.com/{{cookiecutter.github_username}}/{{cookiecutter.app_name}}:
+	mkdir -p $(GOPATH)/src/github.com/{{cookiecutter.github_username}}
+	(cd $(GOPATH)/src/github.com/{{cookiecutter.github_username}}; ln -s "$(PWD)")
 
 test:
 	go test ./...
