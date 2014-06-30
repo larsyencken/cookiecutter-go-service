@@ -2,21 +2,27 @@
 
 {{cookiecutter.project_short_description}}
 
-## Customizing
+## Getting started
 
-Congratulations, you've now started a beautiful new Go service.
+This project requires Go to be installed. On OS X with Homebrew you can just run `brew install go`.
 
-- Add code to the agent in `command/agent/command.go`, this is where the long running service logic lives
-- Add any status, action commands you need to `commands.go`
+Running it then should be as simple as:
 
-## Developing
+```console
+$ make
+$ ./bin/{{cookiecutter.app_name}}
+```
 
-The full set of management commands can be checked with `make help`. In particular:
-
-### Building
-
-Run ``make`` or ``make build``
+Add your long-running agent logic to `command/agent/command.go`, and any status or action commands you need to `commands.go`.
 
 ### Testing
 
-Run ``make test``
+``make test``
+
+## License
+
+_Fill me in._
+
+## Contributing
+
+See `CONTRIBUTING.md` for more details.
