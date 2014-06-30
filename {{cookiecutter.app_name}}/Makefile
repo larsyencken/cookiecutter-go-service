@@ -29,6 +29,17 @@ GIT_DIRTY="$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true
 # Add the godep path to the GOPATH
 GOPATH=$(shell godep path):$(shell echo $$GOPATH)
 
+default: build
+
+help:
+	@echo 'Management commands for {{cookiecutter.app_name}}:'
+	@echo
+	@echo 'Usage:'
+	@echo '    make build    Compile the project.'
+	@echo '    make test     Run tests on a compiled project.'
+	@echo '    make clean    Clean the directory tree.'
+	@echo
+
 build:
 	@echo "building ${OWNER} ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
@@ -41,4 +52,4 @@ clean:
 test:
 	go test ./...
 
-.PHONY: build dist clean test
+.PHONY: build dist clean test help default
