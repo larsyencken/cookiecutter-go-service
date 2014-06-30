@@ -43,7 +43,7 @@ help:
 build: .git
 	@echo "building ${OWNER} ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
-	godep get && \
+	gogpm install && \
 	go build -ldflags "-X main.GitCommit ${GIT_COMMIT}${GIT_DIRTY}" -o bin/${BIN_NAME}
 
 clean:
