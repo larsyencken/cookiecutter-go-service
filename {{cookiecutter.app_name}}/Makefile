@@ -26,9 +26,6 @@ GIT_COMMIT="$(shell git rev-parse HEAD)"
 # Check if there are uncommited changes
 GIT_DIRTY="$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)"
 
-# Add the godep path to the GOPATH
-GOPATH=$(shell godep path):$(shell echo $$GOPATH)
-
 default: build
 
 help:
