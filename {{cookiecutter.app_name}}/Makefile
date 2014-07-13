@@ -78,4 +78,4 @@ test:
 fmt:
 	find . -name '*.go' -not -path './.vendor/*' -exec gofmt -w=true {} ';'
 
-.PHONY: build dist clean test help default link
+.PHONY: build dist clean test help default link fmt
